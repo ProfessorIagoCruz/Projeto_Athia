@@ -1,8 +1,8 @@
 <?php
-// index.php
 include_once 'crud.php';
-$empresas = listarEmpresas();
-$setores = listarSetores();
+$filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+$empresas = listarEmpresas($filter);
+$setores = listarSetores($filter);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,9 +13,26 @@ $setores = listarSetores();
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans">
+    <nav class="bg-blue-600 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-white text-2xl font-semibold">
+                <a href="#">Minha Empresa</a>
+            </div>
+            <div class="flex space-x-4 items-center">
+                <form method="GET" class="flex items-center space-x-2">
+                    <input type="text" name="filter" value="<?= htmlspecialchars($filter) ?>" class="p-2 rounded-md border border-gray-300" placeholder="Filtrar por nome..." />
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">Pesquisar</button>
+                </form>
+                <div class="space-x-2">
+                    <a href="adicionar_empresa.php" class=" text-white px-4 py-2 rounded-md hover:bg-yellow-600">Adicionar Empresa</a>
+                    <a href="adicionar_setor.php" class=" text-white px-4 py-2 rounded-md hover:bg-yellow-600">Adicionar Setor</a>
+                </div>
+            </div>
+        </div>
+    </nav>
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Empresas</h1>
-        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg mb-8">
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-800 text-white">
                     <tr>
@@ -66,12 +83,6 @@ $setores = listarSetores();
                 </tbody>
             </table>
         </div>
-        <div class="text-center mt-6">
-            <a href="adicionar_empresa.php" class="inline-block bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Adicionar Empresa</a>
-            <a href="adicionar_setor.php" class="inline-block bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 ml-4">Adicionar Setor</a>
-        </div>
-
     </div>
-
 </body>
 </html>
