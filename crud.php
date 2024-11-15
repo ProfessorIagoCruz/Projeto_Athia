@@ -14,7 +14,6 @@ function criarSetor($descricao) {
     $stmt->bind_param("s", $descricao); 
     return $stmt->execute();
 }
-
 function atualizarEmpresa($id_empresa, $razaosocial, $nome_fantasia, $cnpj) {
     global $conn;
     $sql = "UPDATE empresa SET razaosocial = ?, nome_fantasia = ?, cnpj = ? WHERE id_empresa = ?";
@@ -43,74 +42,59 @@ function excluirSetor($id_setor) {
     $stmt->bind_param("i", $id_setor);
     return $stmt->execute();
 }
-// Função para listar empresas com filtro
 function listarEmpresas($filter = '') {
     global $conn;
-    // Consulta SQL com filtro
     $sql = "SELECT * FROM empresa WHERE razaosocial LIKE ? OR nome_fantasia LIKE ?";
     $stmt = $conn->prepare($sql);
-    $filter = "%$filter%";  // Envolvendo o filtro com '%' para buscar em qualquer parte do nome
-    $stmt->bind_param("ss", $filter, $filter); // Binding de parâmetros
+    $filter = "%$filter%";  
+    $stmt->bind_param("ss", $filter, $filter); 
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->fetch_all(MYSQLI_ASSOC); // Retorna como um array associativo
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
-
-// Função para listar setores com filtro
 function listarSetores($filter = '') {
     global $conn;
-    // Consulta SQL com filtro
     $sql = "SELECT * FROM setor WHERE descricao LIKE ?";
     $stmt = $conn->prepare($sql);
-    $filter = "%$filter%";  // Envolvendo o filtro com '%' para buscar em qualquer parte da descrição
-    $stmt->bind_param("s", $filter); // Binding de parâmetros
+    $filter = "%$filter%"; 
+    $stmt->bind_param("s", $filter); 
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->fetch_all(MYSQLI_ASSOC); // Retorna como um array associativo
+    return $result->fetch_all(MYSQLI_ASSOC); 
 }
-// Função para listar empresas com filtro
 if (!function_exists('listarEmpresas')) {
     function listarEmpresas($filter = '') {
         global $conn;
-
-        // Se não houver filtro, retornamos todas as empresas
         if (empty($filter)) {
             $sql = "SELECT * FROM empresa";
             $stmt = $conn->prepare($sql);
         } else {
-            // Consulta SQL com filtro
             $sql = "SELECT * FROM empresa WHERE razaosocial LIKE ? OR nome_fantasia LIKE ?";
             $stmt = $conn->prepare($sql);
-            $filter = "%$filter%";  // Envolvendo o filtro com '%' para buscar em qualquer parte do nome
-            $stmt->bind_param("ss", $filter, $filter); // Binding de parâmetros
+            $filter = "%$filter%";  
+            $stmt->bind_param("ss", $filter, $filter);
         }
-
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC); // Retorna como um array associativo
+        return $result->fetch_all(MYSQLI_ASSOC); 
     }
 }
-
-// Função para listar setores com filtro
 if (!function_exists('listarSetores')) {
     function listarSetores($filter = '') {
         global $conn;
-
-        // Se não houver filtro, retornamos todos os setores
         if (empty($filter)) {
             $sql = "SELECT * FROM setor";
             $stmt = $conn->prepare($sql);
         } else {
-            // Consulta SQL com filtro
             $sql = "SELECT * FROM setor WHERE descricao LIKE ?";
             $stmt = $conn->prepare($sql);
-            $filter = "%$filter%";  // Envolvendo o filtro com '%' para buscar em qualquer parte da descrição
-            $stmt->bind_param("s", $filter); // Binding de parâmetros
+            $filter = "%$filter%"; 
+            $stmt->bind_param("s", $filter);
         }
 
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC); // Retorna como um array associativo
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 }
 ?>

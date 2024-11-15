@@ -16,7 +16,7 @@ $setores = listarSetores($filter);
     <nav class="bg-blue-600 p-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="text-white text-2xl font-semibold">
-                <a href="#">Minha Empresa</a>
+                <a href="#">Logo da Empresa com tailwind CSS</a>
             </div>
             <div class="flex space-x-4 items-center">
                 <form method="GET" class="flex items-center space-x-2">
